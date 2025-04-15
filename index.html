@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprianto & Rita - Wedding Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                        url('foto1.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            padding: 4rem 0;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .divider {
+            width: 100px;
+            height: 2px;
+            background: #fff;
+            margin: 2rem auto;
+            animation: expand 1s ease-out;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+            padding: 2rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .countdown.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .countdown-item {
+            text-align: center;
+            padding: 1rem;
+            min-width: 120px;
+        }
+
+        .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .rsvp-section {
+            position: relative;
+            max-width: 800px;
+            margin: 5rem auto;
+            padding: 3rem;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .rsvp-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rsvp-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: url('PATH_KE_FOTO_ORANG.jpg') center/cover;
+            clip-path: circle(40% at 50% 50%);
+            filter: blur(2px);
+            opacity: 0.7;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            background: rgba(255,255,255,0.2);
+            outline: none;
+            box-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: #e8c07d;
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #d4ae6a;
+            transform: translateY(-2px);
+        }
+
+        .comments-section {
+            margin: 4rem 0;
+            padding: 2rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .comments-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .comment {
+            background: rgba(255,255,255,0.05);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .map-container {
+            margin: 4rem 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .map-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes expand {
+            from { width: 0; }
+            to { width: 100px; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .countdown { flex-wrap: wrap; }
+            .countdown-item { min-width: 80px; }
+            .number { font-size: 2rem; }
+            .rsvp-section { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Aprianto<br>&<br>Rita</h1>
+            <div class="divider"></div>
+            <h2>Invite You</h2> <br>
+            <h3>June 27, 2025</h3>
+            <h4>Gumaya Tower Hotel Semarang</h4>
+        </header>
+
+        <div class="countdown" id="countdown"></div>
+
+        <div class="map-container">
+            <iframe src="https://maps.google.com/maps?q=Gumaya%20Tower%20Hotel%20Semarang&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+                    width="100%" 
+                    height="400" 
+                    frameborder="0" 
+                    style="border:0;" 
+                    allowfullscreen>
+            </iframe>
+        </div>
+
+        <section class="rsvp-section">
+            <form class="rsvp-form" id="rsvpForm">
+                <h2>Attendance Confirmation</h2>
+                <div class="form-group">
+                    <input type="text" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <select required>
+                        <option value="">Confirm Attendance</option>
+                        <option value="attend">Will Attend</option>
+                        <option value="not-attend">Can't Attend</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="number" placeholder="Number of Guests" min="1" required>
+                </div>
+                <div class="form-group">
+                    <textarea placeholder="Message (optional)"></textarea>
+                </div>
+                <button type="submit">Send Confirmation</button>
+            </form>
+        </section>
+
+        <section class="comments-section">
+            <h2>Wishes & Prayers</h2>
+            <div id="commentsContainer"></div>
+            <div class="form-group">
+                <input type="text" id="commentInput" placeholder="Write your message...">
+                <button onclick="postComment()">Post Comment</button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Countdown Timer
+        const weddingDate = new Date('2025-06-27T09:00:00').getTime();
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').innerHTML = `
+                <div class="countdown-item">
+                    <div class="number">${days}</div>
+                    <div>Days</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="number">${hours}</div>
+                    <div>Hours</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="number">${minutes}</div>
+                    <div>Minutes</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="number">${seconds}</div>
+                    <div>Seconds</div>
+                </div>
+            `;
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Comment System
+        function postComment() {
+            const commentInput = document.getElementById('commentInput');
+            const commentsContainer = document.getElementById('commentsContainer');
+            const commentText = commentInput.value.trim();
+
+            if(commentText) {
+                const commentDiv = document.createElement('div');
+                commentDiv.className = 'comment';
+                commentDiv.innerHTML = `
+                    <strong>From:</strong>
+                    <p>${commentText}</p>
+                    <small>${new Date().toLocaleString()}</small>
+                `;
+
+                const comments = JSON.parse(localStorage.getItem('comments') || '[]');
+                comments.unshift({ text: commentText, date: new Date().toISOString() });
+                localStorage.setItem('comments', JSON.stringify(comments));
+
+                commentsContainer.prepend(commentDiv);
+                commentInput.value = '';
+            }
+        }
+
+        // Load comments
+        window.addEventListener('load', () => {
+            const comments = JSON.parse(localStorage.getItem('comments')) || [];
+            comments.forEach(comment => {
+                const commentDiv = document.createElement('div');
+                commentDiv.className = 'comment'; 
+                commentDiv.innerHTML = `
+                    <strong>From:</strong>
+                    <p>${comment.text}</p>
+                    <small>${new Date(comment.date).toLocaleString()}</small>
+                `;
+                commentsContainer.appendChild(commentDiv);
+            });
+        });
+
+        // Scroll Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.countdown, .map-container, .rsvp-section, .comments-section').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Form Handling
+        document.getElementById('rsvpForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your confirmation!');
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>
